@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Jack Liu&#39;s Blog</title>
+  
+  <subtitle>https://github.com/q89 秋的部落格</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="https://iddd.top/"/>
+  <updated>2018-05-27T18:41:03.604Z</updated>
+  <id>https://iddd.top/</id>
+  
+  <author>
+    <name>Jack Liu</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Golang 初始化空值</title>
+    <link href="https://iddd.top/2018-05-28-Go-null-judge.html"/>
+    <id>https://iddd.top/2018-05-28-Go-null-judge.html</id>
+    <published>2018-05-27T18:30:01.000Z</published>
+    <updated>2018-05-27T18:41:03.604Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="int空值是0，"><a href="#int空值是0，" class="headerlink" title="int空值是0，"></a>int空值是0，</h3><h3 id="string空值是””而不是null或者nil（区别于其他语言），"><a href="#string空值是””而不是null或者nil（区别于其他语言），" class="headerlink" title="string空值是””而不是null或者nil（区别于其他语言），"></a>string空值是””而不是null或者nil（区别于其他语言），</h3><h3 id="Slice空值是长度为0的Slice而不是nil，"><a href="#Slice空值是长度为0的Slice而不是nil，" class="headerlink" title="Slice空值是长度为0的Slice而不是nil，"></a>Slice空值是长度为0的Slice而不是nil，</h3><h3 id="map空值是nil，"><a href="#map空值是nil，" class="headerlink" title="map空值是nil，"></a>map空值是nil，</h3><h3 id="error空值是nil，"><a href="#error空值是nil，" class="headerlink" title="error空值是nil，"></a>error空值是nil，</h3><h3 id="struct空值是一个“所有成员都是空值”的空Struct而不是nil，"><a href="#struct空值是一个“所有成员都是空值”的空Struct而不是nil，" class="headerlink" title="struct空值是一个“所有成员都是空值”的空Struct而不是nil，"></a>struct空值是一个“所有成员都是空值”的空Struct而不是nil，</h3><h3 id="不能单纯地判断一个struct是不是nil，因为它永远不可能是nil，可以通过返回一个error来判断是否为空，"><a href="#不能单纯地判断一个struct是不是nil，因为它永远不可能是nil，可以通过返回一个error来判断是否为空，" class="headerlink" title="不能单纯地判断一个struct是不是nil，因为它永远不可能是nil，可以通过返回一个error来判断是否为空，"></a>不能单纯地判断一个struct是不是nil，因为它永远不可能是nil，可以通过返回一个error来判断是否为空，</h3><h3 id="golang标准库里的常见做法：if-err-nil"><a href="#golang标准库里的常见做法：if-err-nil" class="headerlink" title="golang标准库里的常见做法：if err != nil"></a>golang标准库里的常见做法：if err != nil</h3>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;int空值是0，&quot;&gt;&lt;a href=&quot;#int空值是0，&quot; class=&quot;headerlink&quot; title=&quot;int空值是0，&quot;&gt;&lt;/a&gt;int空值是0，&lt;/h3&gt;&lt;h3 id=&quot;string空值是””而不是null或者nil（区别于其他语言），&quot;&gt;&lt;a hre
+      
+    
+    </summary>
+    
+      <category term="编程语言" scheme="https://iddd.top/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/"/>
+    
+    
+      <category term="Golang" scheme="https://iddd.top/tags/Golang/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Golang Slice 总结</title>
+    <link href="https://iddd.top/2018-05-28-Go-silce.html"/>
+    <id>https://iddd.top/2018-05-28-Go-silce.html</id>
+    <published>2018-05-27T18:30:01.000Z</published>
+    <updated>2018-05-27T18:42:09.308Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="go-切片：本质"><a href="#go-切片：本质" class="headerlink" title="go 切片：本质"></a>go 切片：本质</h1><h1 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h1><p>Go的切片是在数组之上的抽象数据类型，因此在了解切片之前必须要要理解数组。<br>数组类型由指定和长度和元素类型定义。<br>数组不需要显式的初始化；数组元素会自动初始化为零值：<br>Go的数组是值语义。一个数组变量表示整个数组，它不是指向第一个元素的指针（比如C语言的数组）。当一个数组变量被赋值或者被传递的时候，实际上会复制整个数组。（为了避免复制数组，你可以传递一个指向数组的指针，但是数组指针并不是数组。）可以将数组看作一个特殊的struct，结构的字段名对应数组的索引，同时成员的数目固定。</p><h2 id="切片"><a href="#切片" class="headerlink" title="切片"></a>切片</h2><p>数组虽然有适用它们的地方，但是数组不够灵活，因此在Go代码中数组使用的并不多。但是，切片则使用得相当广泛。切片基于数组构建，但是提供更强的功能和便利。<br>切片的类型是 []T，T 是切片元素的类型。和数组不同的是，切片没有固定的长度。<br>切片的字面值和数组字面值很像，不过切片没有指定元素个数：<br>切片可以内置函数 make 创建，函数签名为：<br>func make([]T, len, cap) []T<br>T 代表被创建的切片元素的类型。函数 make 接受一个类型、一个长度和一个可选的容量参数。调用 make 时，内部会分配一个数组，然后返回数组对应的切片。<br>当容量参数被忽略时，它默认为指定的长度。下面是简洁的写法：<br>s := make([]byte, 5)<br>可以使用内置函数 len 和 cap 获取切片的长度和容量信息。<br>len(s) == 5<br>cap(s) == 5</p><h3 id="长度和容量之间的关系。"><a href="#长度和容量之间的关系。" class="headerlink" title="长度和容量之间的关系。"></a>长度和容量之间的关系。</h3><p>零值的切片类型变量为 nil。对于零值切片变量，len 和 cap 都将返回 0。<br>切片也可以基于现有的切片或数组生成。切分的范围由两个由冒号分割的索引对应的半开区间指定。<br>切片的开始和结束的索引都是可选的；它们分别默认为零和数组的长度。</p><h3 id="切片的本质"><a href="#切片的本质" class="headerlink" title="切片的本质"></a>切片的本质</h3><p>一个切片是一个数组切割区间的描述。它包含了指向数组的指针，切割区间的长度，和容量（切割区间的最大长度）。<br>切片并不复制整个切片元素。它创建一个新的切片执行同样的底层数组。这使得切片操作和数组索引一样高效。因此，通过一个新切片修改元素同样会影响到原始的切片。<br>切片增长不能超出其容量。增长超出切片容量将会导致运行时异常，就像切片或数组的索引超出范围引起异常一样。同样，不能使用小于零的索引去访问切片之前的元素。<br>切片生长（复制和追加）<br>要增加切片的容量必须创建一个新的、更大容量的切片，然后将原有切片的内容复制到新的切片。整个技术是一些支持动态数组语言的常见实现。<br>循环中复制的操作可以由 copy 内置函数替代。copy 函数将源切片的元素复制到目的切片。它返回复制元素的数目。<br>func copy(dst, src []T) int<br>copy 函数支持不同长度的切片之间的复制（它只复制最小切片长度的元素）。此外，copy 函数可以正确处理源和目的切片有重叠的情况。<br>但大多数程序不需要完全的控制，因此Go提供了一个内置函数 append，用于大多数场合；它的函数签名：<br>func append(s []T, x …T) []T<br>append函数将x追加到切片s的末尾，并且在必要的时候增加容量。<br>如果是要将一个切片追加到另一个切片尾部，需要使用…语法将第2个参数展开为参数列表。<br>可以声明一个零值切片（nil），然后在循环中向切片追加数据：</p><p>可能的“陷阱”<br>切片操作并不会复制底层的数组。此层的数组将被保存在内存中，直到它不再被引用。有时候可能会因为一个小的内存引用导致保存所有的数据。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;go-切片：本质&quot;&gt;&lt;a href=&quot;#go-切片：本质&quot; class=&quot;headerlink&quot; title=&quot;go 切片：本质&quot;&gt;&lt;/a&gt;go 切片：本质&lt;/h1&gt;&lt;h1 id=&quot;数组&quot;&gt;&lt;a href=&quot;#数组&quot; class=&quot;headerlink&quot; titl
+      
+    
+    </summary>
+    
+      <category term="编程语言" scheme="https://iddd.top/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/"/>
+    
+    
+      <category term="Golang" scheme="https://iddd.top/tags/Golang/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Golang不使用OS层process而使用语言层面（Goroutine）处理 并发 &amp; 并行 Task任务方案(针对业务来说)的个人思考和实践思路随想</title>
+    <link href="https://iddd.top/2018-05-28-Go-goroutine.html"/>
+    <id>https://iddd.top/2018-05-28-Go-goroutine.html</id>
+    <published>2018-05-27T18:30:01.000Z</published>
+    <updated>2018-05-28T01:17:17.325Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="Golang不使用OS层process而使用语言层面（Goroutine）处理-并发-amp-并行-Task任务方案-针对业务来说-的个人思考和实践思路随想-—Jack-Liu-秋"><a href="#Golang不使用OS层process而使用语言层面（Goroutine）处理-并发-amp-并行-Task任务方案-针对业务来说-的个人思考和实践思路随想-—Jack-Liu-秋" class="headerlink" title="Golang不使用OS层process而使用语言层面（Goroutine）处理 并发 &amp; 并行 Task任务方案(针对业务来说)的个人思考和实践思路随想 —Jack Liu 秋"></a>Golang不使用OS层process而使用语言层面（Goroutine）处理 并发 &amp; 并行 Task任务方案(针对业务来说)的个人思考和实践思路随想 —Jack Liu 秋</h1><p>1.使用OS层面进程管理，虽然成本低廉快捷，但对CPU的性能开销比较大，Golang通过Goroutine的引入，构建一种SandBox沙箱容器式的方案，可以将并发处理任务放在语言层面内部，“隔离“在系统层面之上，构建Goroutine池的同时，也能保证在性能可靠的前提下，安全性也增强。<br>目前大规模分布式系统的整体方向，大部分也都是建立在OS系统层之上(而非系统层面)以达到可控的标准控制，将OS系统级内核CPU的开销降到最低保证OS层流畅运行，这也让Linux为代表的服务器OS系统更“专注”做Base底层基础性的业务支撑。</p><p>2.系统层面上，抛开编程语言层面不谈，服务端越来越趋于Service服务化和分布式、集群化，以此应对越来越复杂的业务。现有编程语言历史遗留和生态环境等因素处理的成本较高，针对多核CPU使用率也不高，性能问题凸显。<br>Golang在服务器端的优势在于，非常低成本将开发人员从以前的单进程类编程语言中解放，提供最低成本快速转变为并行编程的思维模式。<br>Goroutine并发执行的模式，不放在系统进程处理，好处：<br>（1）.安全隔离型设计，限制进程中Task Process处理的边界，在大规模集群服务器中使用相对统一的标准处理方式，最大限度规避OS层面的差异带来的问题；<br>（2）.降低OS进程的开销，不因golang的执行导致拖累系统CPU资源；<br>（3）.并发Task任务行为和状态可控，内存占用开销小，容量自由扩展；<br>（4）.轻量级在协程处理时可靠性高；<br>（5）.使用这种机制，可以较低成本构建大型和可伸缩计算和批处理Task任务的应用和程序，一开始Golang的定位就是系统级编程语言，所以二进制的运行性能不会差，现阶段的语言性能之争毫无意义。   </p><p>目前业内针对业务处理的大型系统应用的常态应该至少包含两点：<br>1.支持最小成本组织大规模数据和计算处理；<br>2.Task任务的行为和状态能够可靠、低成本可控。  </p><p>云计算追求对服务端在安全可控的前提下软硬件资源的最低成本配置和最佳的资源调度，做的所有分布式、自由伸缩、集群的重要原因也是源为此，Goroutines在这方面大有可为。  </p><p>官方一句话说得比较直白和代表性：<br>Do not communicate by sharing memory; instead, share memory by communicating.<br>不要通过共享内存进行通信，而是通过通信共享内存。</p><p>明确并发和并行的两个概念：<br>并发不是并行：并发是由切换时间来实现“同时”运行，并行是多核多线程<br>goroutine 通过通信来共享内存，而不是共享内存来通信。这样就可以较为充分利用多核CPU和内存资源的同时，又相对比较可靠，”协程”也是类似种”管道”的思维模式，在这里，通信显得比较重要，这些Golang已经做了底层化实现，对开发者来说比较简便一些，大部分精力放在管理好这些阀门出入口即可。<br>Linux的管道是非常优秀的设计。</p><p>这个应该不是说以前的方案或其他语言处理思路是错误、不佳或有偏差的，历史上很多方案往往受制于硬件的运算性能综合因素考虑，是当时权衡下来的最好的方案，比如硬件成本太高等，现在随着软硬件的快速发展和成本低廉有这个条件来做这个事情了。终归是有当时基于现实情况的各种因素考量。<br>无论性能再怎么快，必须把可靠性放在重要位置，一个相对不可靠的方案，程序运行速度再快将毫无意义，我想这是Golang从软件工程化考虑的重要考量吧。  </p><p>Golang设计哲学和Unix应该是一致的：大道至简，“简”是对大规模工程化系统开发中最好的思考范畴，虽万变仍不离其宗。 </p><p>并发&amp;并行的编程理念对开发人员来说是未来编程思维的常态，事物发展的规律。  </p><p>至少在公司产品和项目开发中，Golang至少是未来主力的语言，因为随着数据的不断增长，必须要一种从性能上，可靠性上和开发上相对最合适的技术选型，Golang是很符合这一点的，Golang不只是一个简单的编程语言这么简单。<br>C系的开发语言经久不衰很重要的原因就是追求用最简单的方式解决现实问题，Golang是未来考虑的主力开发语言。  </p><h2 id="个人实践思路示意："><a href="#个人实践思路示意：" class="headerlink" title="个人实践思路示意："></a>个人实践思路示意：</h2><p> <img src="https://github.com/q89/jackliu-go-programming-note/blob/master/Go-done-mode.jpg" alt="image"></p><pre><code>--------- Jack Liu 秋    Date：2017-05-30</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;Golang不使用OS层process而使用语言层面（Goroutine）处理-并发-amp-并行-Task任务方案-针对业务来说-的个人思考和实践思路随想-—Jack-Liu-秋&quot;&gt;&lt;a href=&quot;#Golang不使用OS层process而使用语言层面（Gor
+      
+    
+    </summary>
+    
+      <category term="编程语言" scheme="https://iddd.top/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/"/>
+    
+    
+      <category term="Golang" scheme="https://iddd.top/tags/Golang/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Golang 指针 Pointer</title>
+    <link href="https://iddd.top/2018-05-28-Go-pointer.html"/>
+    <id>https://iddd.top/2018-05-28-Go-pointer.html</id>
+    <published>2018-05-27T18:30:01.000Z</published>
+    <updated>2018-05-27T18:41:30.870Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="基于指针对象的方法"><a href="#基于指针对象的方法" class="headerlink" title="基于指针对象的方法"></a>基于指针对象的方法</h1><p>当调用一个函数时，会对其每一个参数值进行拷贝，如果一个函数需要更新一个变量，或者函数的其中一个参数实在太大我们希望能够避免进行这种默认的拷贝，这种情况下我们就需要用到指针了。对应到我们这里用来更新接收器的对象的方法，当这个接受者变量本身比较大时，我们就可以用其指针而不是对象来声明方法，如下：</p><p>func (p <em>Point) ScaleBy(factor float64) {<br>    p.X </em>= factor<br>    p.Y <em>= factor<br>}<br>这个方法的名字是(</em>Point).ScaleBy。这里的括号是必须的；没有括号的话这个表达式可能会被理解为*(Point.ScaleBy)。</p><p>在现实的程序里，一般会约定如果Point这个类有一个指针作为接收器的方法，那么所有Point的方法都必须有一个指针接收器，即使是那些并不需要这个指针接收器的函数。我们在这里打破了这个约定只是为了展示一下两种方法的异同而已。</p><p>只有类型(Point)和指向他们的指针(*Point)，才是可能会出现在接收器声明里的两种接收器。此外，为了避免歧义，在声明方法时，如果一个类型名本身是一个指针的话，是不允许其出现在接收器中的，比如下面这个例子：</p><p>type P <em>int<br>func (P) f() { /</em> … <em>/ } // compile error: invalid receiver type<br>想要调用指针类型方法(</em>Point).ScaleBy，只要提供一个Point类型的指针即可，像下面这样。</p><p>r := &amp;Point{1, 2}<br>r.ScaleBy(2)<br>fmt.Println(*r) // “{2, 4}”<br>或者这样：</p><p>p := Point{1, 2}<br>pptr := &amp;p<br>pptr.ScaleBy(2)<br>fmt.Println(p) // “{2, 4}”<br>或者这样:</p><p>p := Point{1, 2}<br>(&amp;p).ScaleBy(2)<br>fmt.Println(p) // “{2, 4}”<br>不过后面两种方法有些笨拙。幸运的是，go语言本身在这种地方会帮到我们。如果接收器p是一个Point类型的变量，并且其方法需要一个Point指针作为接收器，我们可以用下面这种简短的写法：</p><p>p.ScaleBy(2)<br>编译器会隐式地帮我们用&amp;p去调用ScaleBy这个方法。这种简写方法只适用于“变量”，包括struct里的字段比如p.X，以及array和slice内的元素比如perim[0]。我们不能通过一个无法取到地址的接收器来调用指针方法，比如临时变量的内存地址就无法获取得到：</p><p>Point{1, 2}.ScaleBy(2) // compile error: can’t take address of Point literal<br>但是我们可以用一个<em>Point这样的接收器来调用Point的方法，因为我们可以通过地址来找到这个变量，只要用解引用符号</em>来取到该变量即可。编译器在这里也会给我们隐式地插入*这个操作符，所以下面这两种写法等价的：</p><p>pptr.Distance(q)<br>(*pptr).Distance(q)<br>这里的几个例子可能让你有些困惑，所以我们总结一下：在每一个合法的方法调用表达式中，也就是下面三种情况里的任意一种情况都是可以的：</p><p>不论是接收器的实际参数和其接收器的形式参数相同，比如两者都是类型T或者都是类型*T：</p><p>Point{1, 2}.Distance(q) //  Point<br>pptr.ScaleBy(2)         // <em>Point<br>或者接收器实参是类型T，但接收器形参是类型</em>T，这种情况下编译器会隐式地为我们取变量的地址：</p><p>p.ScaleBy(2) // implicit (&amp;p)<br>或者接收器实参是类型*T，形参是类型T。编译器会隐式地为我们解引用，取到指针指向的实际变量：</p><p>pptr.Distance(q) // implicit (<em>pptr)<br>如果命名类型T(译注：用type xxx定义的类型)的所有方法都是用T类型自己来做接收器(而不是</em>T)，那么拷贝这种类型的实例就是安全的；调用他的任何一个方法也就会产生一个值的拷贝。比如time.Duration的这个类型，在调用其方法时就会被全部拷贝一份，包括在作为参数传入函数的时候。但是如果一个方法使用指针作为接收器，你需要避免对其进行拷贝，因为这样可能会破坏掉该类型内部的不变性。比如你对bytes.Buffer对象进行了拷贝，那么可能会引起原始对象和拷贝对象只是别名而已，但实际上其指向的对象是一致的。紧接着对拷贝后的变量进行修改可能会有让你意外的结果。</p><p>译注： 作者这里说的比较绕，其实有两点：</p><p>不管你的method的receiver是指针类型还是非指针类型，都是可以通过指针/非指针类型进行调用的，编译器会帮你做类型转换。<br>在声明一个method的receiver该是指针还是非指针类型时，你需要考虑两方面的内部，第一方面是这个对象本身是不是特别大，如果声明为非指针变量时，调用会产生一次拷贝；第二方面是如果你用指针类型作为receiver，那么你一定要注意，这种指针类型指向的始终是一块内存地址，就算你对其进行了拷贝。熟悉C或者C艹的人这里应该很快能明白。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;基于指针对象的方法&quot;&gt;&lt;a href=&quot;#基于指针对象的方法&quot; class=&quot;headerlink&quot; title=&quot;基于指针对象的方法&quot;&gt;&lt;/a&gt;基于指针对象的方法&lt;/h1&gt;&lt;p&gt;当调用一个函数时，会对其每一个参数值进行拷贝，如果一个函数需要更新一个变量，或者函数
+      
+    
+    </summary>
+    
+      <category term="编程语言" scheme="https://iddd.top/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/"/>
+    
+    
+      <category term="Golang" scheme="https://iddd.top/tags/Golang/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Golang的Struct结构体</title>
+    <link href="https://iddd.top/2018-05-28-Go-struct.html"/>
+    <id>https://iddd.top/2018-05-28-Go-struct.html</id>
+    <published>2018-05-27T18:30:01.000Z</published>
+    <updated>2018-05-27T18:43:14.990Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="面向对象Class类的底层实现从某些方面说就是结构体，对象的引用就是指针，只是语言把他们封装起来了而已。"><a href="#面向对象Class类的底层实现从某些方面说就是结构体，对象的引用就是指针，只是语言把他们封装起来了而已。" class="headerlink" title="面向对象Class类的底层实现从某些方面说就是结构体，对象的引用就是指针，只是语言把他们封装起来了而已。"></a>面向对象Class类的底层实现从某些方面说就是结构体，对象的引用就是指针，只是语言把他们封装起来了而已。</h1><p>Golang的Struct结构体（源于C语言，但又有别于C）的灵活性：<br>go语言中并没有像C++，Java语言中这类的Class，它只含有像C语言中的结构体，用结构体和指针等特性，完成一个类的作用，很巧妙的使用了指针和结构体，不仅是go的面向对象，包括go语言中的map等操作都是借助了结构体。其实，说白了，C++、Java等面向对象的语言中，类的底层实现就是结构体，对象的引用就是指针，只是语言把他们封装起来了而已。很多人刚接触面向对象很不理解这些东西也应该缘于此。<br>或者说，面向对象的封装在某种意义上是以牺牲灵活特性的为代价的一种抽象简化。</p><p>所有高级语言(PHP、Java、Python、JavaScript等等…)的数组Array、字典map、Slice切片、Json等结构类型往往只是叫法不一样，多少都源于C系或者受到C系的Struct结构体思想的影响,在某些特定领域内，做了一些针对性的解决方案。</p><p>PHP就是c语言实现的一套高级“程序”语言，只不过是这套“程序化的语言”的规范和语法等机制可以用来快速做web领域的事情，通过解释器，转成底层语言完成代码的最终执行。</p><p>这也印证了很多答案往往追根溯源都在计算机数据结构基础里没有捷径可以走。</p><h3 id="编程的世界应该是丰富多彩的-不拘泥于任何一种思维模式。"><a href="#编程的世界应该是丰富多彩的-不拘泥于任何一种思维模式。" class="headerlink" title="编程的世界应该是丰富多彩的,不拘泥于任何一种思维模式。"></a>编程的世界应该是丰富多彩的,不拘泥于任何一种思维模式。</h3><h2 id="golang-struct注意事项："><a href="#golang-struct注意事项：" class="headerlink" title="golang struct注意事项："></a>golang struct注意事项：</h2><p>对于struct类型来说，字段的先后顺序是非常关键的。如果两个struct类型包含了完全相同的字段，但是排列顺序不同或者进行了部分合并，那么这两个struct就是不同的类型！</p><p>如果struct字段是大写字母开头，那么该字段就是导出的（包外可见），这也符合Go语言的可见性规则。因此一个struct可以同时包含导出和未导出的变量。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;面向对象Class类的底层实现从某些方面说就是结构体，对象的引用就是指针，只是语言把他们封装起来了而已。&quot;&gt;&lt;a href=&quot;#面向对象Class类的底层实现从某些方面说就是结构体，对象的引用就是指针，只是语言把他们封装起来了而已。&quot; class=&quot;headerl
+      
+    
+    </summary>
+    
+      <category term="编程语言" scheme="https://iddd.top/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/"/>
+    
+    
+      <category term="Golang" scheme="https://iddd.top/tags/Golang/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>关于Go语言:结构体(Struct)-方法(Method)-接收者(Receiver)类型的适用场景选择和命名约定(Go官方建议)</title>
+    <link href="https://iddd.top/2018-05-28-Go-struct-method-receiver.html"/>
+    <id>https://iddd.top/2018-05-28-Go-struct-method-receiver.html</id>
+    <published>2018-05-27T18:30:01.000Z</published>
+    <updated>2018-05-27T18:42:35.893Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="关于Go语言-结构体-Struct-方法-Method-接收者-Receiver-类型的适用场景选择和命名约定-Go官方建议"><a href="#关于Go语言-结构体-Struct-方法-Method-接收者-Receiver-类型的适用场景选择和命名约定-Go官方建议" class="headerlink" title="关于Go语言:结构体(Struct)-方法(Method)-接收者(Receiver)类型的适用场景选择和命名约定(Go官方建议)"></a>关于Go语言:结构体(Struct)-方法(Method)-接收者(Receiver)类型的适用场景选择和命名约定(Go官方建议)</h1><h3 id="何时使用值类型场景"><a href="#何时使用值类型场景" class="headerlink" title="何时使用值类型场景"></a>何时使用值类型场景</h3><p>1.如果接受者是一个 map，func 或者 chan，使用值类型(因为它们本身就是引用类型)。<br>2.如果接受者是一个 slice，并且方法不执行 reslice 操作，也不重新分配内存给 slice，使用值类型。<br>3.如果接受者是一个小的数组或者原生的值类型结构体类型(比如 time.Time 类型)，而且没有可修改的字段和指针，又或者接受者是一个简单地基本类型像是 int 和 string，使用值类型就好了。<br>一个值类型的接受者可以减少一定数量的垃圾生成，如果一个值被传入一个值类型接受者的方法，一个栈上的拷贝会替代在堆上分配内存(但不是保证一定成功)，所以在没搞明白代码想干什么之前，别因为这个原因而选择值类型接受者。  </p><h3 id="使用指针类型场景"><a href="#使用指针类型场景" class="headerlink" title="使用指针类型场景"></a>使用指针类型场景</h3><p>1.如果方法需要修改接受者，接受者必须是指针类型。<br>2.如果接受者是一个包含了 sync.Mutex 或者类似同步字段的结构体，接受者必须是指针，这样可以避免拷贝。<br>3.如果接受者是一个大的结构体或者数组，那么指针类型接受者更有效率。<br>4.从此方法中并发的调用函数和方法时，接受者可以被修改吗？一个值类型的接受者当方法调用时会创建一份拷贝，所以外部的修改不能作用到这个接受者上。如果修改必须被原始的接受者可见，那么接受者必须是指针类型。<br>5.如果接受者是一个结构体，数组或者 slice，它们中任意一个元素是指针类型而且可能被修改，建议使用指针类型接受者，这样会增加程序的可读性。  </p><h3 id="Receiver接收者的命名"><a href="#Receiver接收者的命名" class="headerlink" title="Receiver接收者的命名"></a>Receiver接收者的命名</h3><p>1.社区约定的接受者命名是类型的一个或两个字母的缩写(像 c 或者 cl 对于 Client)。<br>2.避免使用泛指的名字像是 me，this 或者 self，也避免使用过度描述的名字；<br>3.如果你在一个地方使用了 c，那么就不要在别的地方使用 cl；  </p><h3 id="自我总结"><a href="#自我总结" class="headerlink" title="自我总结"></a>自我总结</h3><p>一般使用场景下，决定是否使用指针，看数据单体(结构体、接口等等…)容量的大小(特别注意:注意切片slice、字典map、管道channel本身引用类型，底层本身是指针调用)，语言层面数据单体存储的形式是否本身就是指针类型，数据单体的作用范围和操作的范围，归根结底，还是要结合实际具体业务场景提前规划好数据结构,开发中多考虑数据单体的拷贝成本是否过高。<br>Go官方的使用建议，也是在Go内存分配和数据存储原理上的归纳总结。<br>Go语言虽然有指针但是没有包含指针计算，指针的操作也非常简单(这点考量特别地好,简单的结构可以让GC最低成本地监测内存运行状态,避免过多的指针关联,利于GC内存管理和回收)。  </p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;关于Go语言-结构体-Struct-方法-Method-接收者-Receiver-类型的适用场景选择和命名约定-Go官方建议&quot;&gt;&lt;a href=&quot;#关于Go语言-结构体-Struct-方法-Method-接收者-Receiver-类型的适用场景选择和命名约定-Go
+      
+    
+    </summary>
+    
+      <category term="编程语言" scheme="https://iddd.top/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/"/>
+    
+    
+      <category term="Golang" scheme="https://iddd.top/tags/Golang/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>About Author</title>
+    <link href="https://iddd.top/2018-05-27-about-author.html"/>
+    <id>https://iddd.top/2018-05-27-about-author.html</id>
+    <published>2018-05-27T12:01:01.000Z</published>
+    <updated>2018-05-28T02:27:37.729Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="Jack-Liu’s-Blog"><a href="#Jack-Liu’s-Blog" class="headerlink" title="Jack Liu’s Blog"></a>Jack Liu’s Blog</h3><p>My home page <a href="https://github.com/q89" target="_blank" rel="noopener">https://github.com/q89</a>. Open source changes the world, an open source community programmer. Where there’s a will, there is a way.</p><h4 id="My-Contact-information"><a href="#My-Contact-information" class="headerlink" title="My Contact information"></a>My Contact information</h4><p>QQ: 404691073<br>Github: <a href="https://github.com/q89" target="_blank" rel="noopener">https://github.com/q89</a><br>Home page: <a href="https://iddd.top">https://iddd.top</a></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;Jack-Liu’s-Blog&quot;&gt;&lt;a href=&quot;#Jack-Liu’s-Blog&quot; class=&quot;headerlink&quot; title=&quot;Jack Liu’s Blog&quot;&gt;&lt;/a&gt;Jack Liu’s Blog&lt;/h3&gt;&lt;p&gt;My home page &lt;a hr
+      
+    
+    </summary>
+    
+      <category term="关于作者" scheme="https://iddd.top/categories/%E5%85%B3%E4%BA%8E%E4%BD%9C%E8%80%85/"/>
+    
+    
+      <category term="Author" scheme="https://iddd.top/tags/Author/"/>
+    
+  </entry>
+  
+</feed>
