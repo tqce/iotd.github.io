@@ -117,31 +117,6 @@
   </entry>
   
   <entry>
-    <title>关于Go语言:结构体(Struct)-方法(Method)-接收者(Receiver)类型的适用场景选择和命名约定(Go官方建议)</title>
-    <link href="https://iddd.top/2018-05-28-Go-struct-method-receiver.html"/>
-    <id>https://iddd.top/2018-05-28-Go-struct-method-receiver.html</id>
-    <published>2018-05-27T18:30:01.000Z</published>
-    <updated>2018-05-27T18:42:35.893Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="关于Go语言-结构体-Struct-方法-Method-接收者-Receiver-类型的适用场景选择和命名约定-Go官方建议"><a href="#关于Go语言-结构体-Struct-方法-Method-接收者-Receiver-类型的适用场景选择和命名约定-Go官方建议" class="headerlink" title="关于Go语言:结构体(Struct)-方法(Method)-接收者(Receiver)类型的适用场景选择和命名约定(Go官方建议)"></a>关于Go语言:结构体(Struct)-方法(Method)-接收者(Receiver)类型的适用场景选择和命名约定(Go官方建议)</h1><h3 id="何时使用值类型场景"><a href="#何时使用值类型场景" class="headerlink" title="何时使用值类型场景"></a>何时使用值类型场景</h3><p>1.如果接受者是一个 map，func 或者 chan，使用值类型(因为它们本身就是引用类型)。<br>2.如果接受者是一个 slice，并且方法不执行 reslice 操作，也不重新分配内存给 slice，使用值类型。<br>3.如果接受者是一个小的数组或者原生的值类型结构体类型(比如 time.Time 类型)，而且没有可修改的字段和指针，又或者接受者是一个简单地基本类型像是 int 和 string，使用值类型就好了。<br>一个值类型的接受者可以减少一定数量的垃圾生成，如果一个值被传入一个值类型接受者的方法，一个栈上的拷贝会替代在堆上分配内存(但不是保证一定成功)，所以在没搞明白代码想干什么之前，别因为这个原因而选择值类型接受者。  </p><h3 id="使用指针类型场景"><a href="#使用指针类型场景" class="headerlink" title="使用指针类型场景"></a>使用指针类型场景</h3><p>1.如果方法需要修改接受者，接受者必须是指针类型。<br>2.如果接受者是一个包含了 sync.Mutex 或者类似同步字段的结构体，接受者必须是指针，这样可以避免拷贝。<br>3.如果接受者是一个大的结构体或者数组，那么指针类型接受者更有效率。<br>4.从此方法中并发的调用函数和方法时，接受者可以被修改吗？一个值类型的接受者当方法调用时会创建一份拷贝，所以外部的修改不能作用到这个接受者上。如果修改必须被原始的接受者可见，那么接受者必须是指针类型。<br>5.如果接受者是一个结构体，数组或者 slice，它们中任意一个元素是指针类型而且可能被修改，建议使用指针类型接受者，这样会增加程序的可读性。  </p><h3 id="Receiver接收者的命名"><a href="#Receiver接收者的命名" class="headerlink" title="Receiver接收者的命名"></a>Receiver接收者的命名</h3><p>1.社区约定的接受者命名是类型的一个或两个字母的缩写(像 c 或者 cl 对于 Client)。<br>2.避免使用泛指的名字像是 me，this 或者 self，也避免使用过度描述的名字；<br>3.如果你在一个地方使用了 c，那么就不要在别的地方使用 cl；  </p><h3 id="自我总结"><a href="#自我总结" class="headerlink" title="自我总结"></a>自我总结</h3><p>一般使用场景下，决定是否使用指针，看数据单体(结构体、接口等等…)容量的大小(特别注意:注意切片slice、字典map、管道channel本身引用类型，底层本身是指针调用)，语言层面数据单体存储的形式是否本身就是指针类型，数据单体的作用范围和操作的范围，归根结底，还是要结合实际具体业务场景提前规划好数据结构,开发中多考虑数据单体的拷贝成本是否过高。<br>Go官方的使用建议，也是在Go内存分配和数据存储原理上的归纳总结。<br>Go语言虽然有指针但是没有包含指针计算，指针的操作也非常简单(这点考量特别地好,简单的结构可以让GC最低成本地监测内存运行状态,避免过多的指针关联,利于GC内存管理和回收)。  </p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h1 id=&quot;关于Go语言-结构体-Struct-方法-Method-接收者-Receiver-类型的适用场景选择和命名约定-Go官方建议&quot;&gt;&lt;a href=&quot;#关于Go语言-结构体-Struct-方法-Method-接收者-Receiver-类型的适用场景选择和命名约定-Go
-      
-    
-    </summary>
-    
-      <category term="编程语言" scheme="https://iddd.top/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/"/>
-    
-    
-      <category term="Golang" scheme="https://iddd.top/tags/Golang/"/>
-    
-  </entry>
-  
-  <entry>
     <title>Golang的Struct结构体</title>
     <link href="https://iddd.top/2018-05-28-Go-struct.html"/>
     <id>https://iddd.top/2018-05-28-Go-struct.html</id>
@@ -155,6 +130,31 @@
       
       
         &lt;h1 id=&quot;面向对象Class类的底层实现从某些方面说就是结构体，对象的引用就是指针，只是语言把他们封装起来了而已。&quot;&gt;&lt;a href=&quot;#面向对象Class类的底层实现从某些方面说就是结构体，对象的引用就是指针，只是语言把他们封装起来了而已。&quot; class=&quot;headerl
+      
+    
+    </summary>
+    
+      <category term="编程语言" scheme="https://iddd.top/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/"/>
+    
+    
+      <category term="Golang" scheme="https://iddd.top/tags/Golang/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>关于Go语言:结构体(Struct)-方法(Method)-接收者(Receiver)类型的适用场景选择和命名约定(Go官方建议)</title>
+    <link href="https://iddd.top/2018-05-28-Go-struct-method-receiver.html"/>
+    <id>https://iddd.top/2018-05-28-Go-struct-method-receiver.html</id>
+    <published>2018-05-27T18:30:01.000Z</published>
+    <updated>2018-05-27T18:42:35.893Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="关于Go语言-结构体-Struct-方法-Method-接收者-Receiver-类型的适用场景选择和命名约定-Go官方建议"><a href="#关于Go语言-结构体-Struct-方法-Method-接收者-Receiver-类型的适用场景选择和命名约定-Go官方建议" class="headerlink" title="关于Go语言:结构体(Struct)-方法(Method)-接收者(Receiver)类型的适用场景选择和命名约定(Go官方建议)"></a>关于Go语言:结构体(Struct)-方法(Method)-接收者(Receiver)类型的适用场景选择和命名约定(Go官方建议)</h1><h3 id="何时使用值类型场景"><a href="#何时使用值类型场景" class="headerlink" title="何时使用值类型场景"></a>何时使用值类型场景</h3><p>1.如果接受者是一个 map，func 或者 chan，使用值类型(因为它们本身就是引用类型)。<br>2.如果接受者是一个 slice，并且方法不执行 reslice 操作，也不重新分配内存给 slice，使用值类型。<br>3.如果接受者是一个小的数组或者原生的值类型结构体类型(比如 time.Time 类型)，而且没有可修改的字段和指针，又或者接受者是一个简单地基本类型像是 int 和 string，使用值类型就好了。<br>一个值类型的接受者可以减少一定数量的垃圾生成，如果一个值被传入一个值类型接受者的方法，一个栈上的拷贝会替代在堆上分配内存(但不是保证一定成功)，所以在没搞明白代码想干什么之前，别因为这个原因而选择值类型接受者。  </p><h3 id="使用指针类型场景"><a href="#使用指针类型场景" class="headerlink" title="使用指针类型场景"></a>使用指针类型场景</h3><p>1.如果方法需要修改接受者，接受者必须是指针类型。<br>2.如果接受者是一个包含了 sync.Mutex 或者类似同步字段的结构体，接受者必须是指针，这样可以避免拷贝。<br>3.如果接受者是一个大的结构体或者数组，那么指针类型接受者更有效率。<br>4.从此方法中并发的调用函数和方法时，接受者可以被修改吗？一个值类型的接受者当方法调用时会创建一份拷贝，所以外部的修改不能作用到这个接受者上。如果修改必须被原始的接受者可见，那么接受者必须是指针类型。<br>5.如果接受者是一个结构体，数组或者 slice，它们中任意一个元素是指针类型而且可能被修改，建议使用指针类型接受者，这样会增加程序的可读性。  </p><h3 id="Receiver接收者的命名"><a href="#Receiver接收者的命名" class="headerlink" title="Receiver接收者的命名"></a>Receiver接收者的命名</h3><p>1.社区约定的接受者命名是类型的一个或两个字母的缩写(像 c 或者 cl 对于 Client)。<br>2.避免使用泛指的名字像是 me，this 或者 self，也避免使用过度描述的名字；<br>3.如果你在一个地方使用了 c，那么就不要在别的地方使用 cl；  </p><h3 id="自我总结"><a href="#自我总结" class="headerlink" title="自我总结"></a>自我总结</h3><p>一般使用场景下，决定是否使用指针，看数据单体(结构体、接口等等…)容量的大小(特别注意:注意切片slice、字典map、管道channel本身引用类型，底层本身是指针调用)，语言层面数据单体存储的形式是否本身就是指针类型，数据单体的作用范围和操作的范围，归根结底，还是要结合实际具体业务场景提前规划好数据结构,开发中多考虑数据单体的拷贝成本是否过高。<br>Go官方的使用建议，也是在Go内存分配和数据存储原理上的归纳总结。<br>Go语言虽然有指针但是没有包含指针计算，指针的操作也非常简单(这点考量特别地好,简单的结构可以让GC最低成本地监测内存运行状态,避免过多的指针关联,利于GC内存管理和回收)。  </p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;关于Go语言-结构体-Struct-方法-Method-接收者-Receiver-类型的适用场景选择和命名约定-Go官方建议&quot;&gt;&lt;a href=&quot;#关于Go语言-结构体-Struct-方法-Method-接收者-Receiver-类型的适用场景选择和命名约定-Go
       
     
     </summary>
