@@ -67,31 +67,6 @@
   </entry>
   
   <entry>
-    <title>Golang的Struct结构体</title>
-    <link href="https://iddd.top/2018-05-28-Go-struct.html"/>
-    <id>https://iddd.top/2018-05-28-Go-struct.html</id>
-    <published>2018-05-27T18:30:01.000Z</published>
-    <updated>2018-05-27T18:43:14.990Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="面向对象Class类的底层实现从某些方面说就是结构体，对象的引用就是指针，只是语言把他们封装起来了而已。"><a href="#面向对象Class类的底层实现从某些方面说就是结构体，对象的引用就是指针，只是语言把他们封装起来了而已。" class="headerlink" title="面向对象Class类的底层实现从某些方面说就是结构体，对象的引用就是指针，只是语言把他们封装起来了而已。"></a>面向对象Class类的底层实现从某些方面说就是结构体，对象的引用就是指针，只是语言把他们封装起来了而已。</h1><p>Golang的Struct结构体（源于C语言，但又有别于C）的灵活性：<br>go语言中并没有像C++，Java语言中这类的Class，它只含有像C语言中的结构体，用结构体和指针等特性，完成一个类的作用，很巧妙的使用了指针和结构体，不仅是go的面向对象，包括go语言中的map等操作都是借助了结构体。其实，说白了，C++、Java等面向对象的语言中，类的底层实现就是结构体，对象的引用就是指针，只是语言把他们封装起来了而已。很多人刚接触面向对象很不理解这些东西也应该缘于此。<br>或者说，面向对象的封装在某种意义上是以牺牲灵活特性的为代价的一种抽象简化。</p><p>所有高级语言(PHP、Java、Python、JavaScript等等…)的数组Array、字典map、Slice切片、Json等结构类型往往只是叫法不一样，多少都源于C系或者受到C系的Struct结构体思想的影响,在某些特定领域内，做了一些针对性的解决方案。</p><p>PHP就是c语言实现的一套高级“程序”语言，只不过是这套“程序化的语言”的规范和语法等机制可以用来快速做web领域的事情，通过解释器，转成底层语言完成代码的最终执行。</p><p>这也印证了很多答案往往追根溯源都在计算机数据结构基础里没有捷径可以走。</p><h3 id="编程的世界应该是丰富多彩的-不拘泥于任何一种思维模式。"><a href="#编程的世界应该是丰富多彩的-不拘泥于任何一种思维模式。" class="headerlink" title="编程的世界应该是丰富多彩的,不拘泥于任何一种思维模式。"></a>编程的世界应该是丰富多彩的,不拘泥于任何一种思维模式。</h3><h2 id="golang-struct注意事项："><a href="#golang-struct注意事项：" class="headerlink" title="golang struct注意事项："></a>golang struct注意事项：</h2><p>对于struct类型来说，字段的先后顺序是非常关键的。如果两个struct类型包含了完全相同的字段，但是排列顺序不同或者进行了部分合并，那么这两个struct就是不同的类型！</p><p>如果struct字段是大写字母开头，那么该字段就是导出的（包外可见），这也符合Go语言的可见性规则。因此一个struct可以同时包含导出和未导出的变量。</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h1 id=&quot;面向对象Class类的底层实现从某些方面说就是结构体，对象的引用就是指针，只是语言把他们封装起来了而已。&quot;&gt;&lt;a href=&quot;#面向对象Class类的底层实现从某些方面说就是结构体，对象的引用就是指针，只是语言把他们封装起来了而已。&quot; class=&quot;headerl
-      
-    
-    </summary>
-    
-      <category term="编程语言" scheme="https://iddd.top/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/"/>
-    
-    
-      <category term="Golang" scheme="https://iddd.top/tags/Golang/"/>
-    
-  </entry>
-  
-  <entry>
     <title>关于Go语言:结构体(Struct)-方法(Method)-接收者(Receiver)类型的适用场景选择和命名约定(Go官方建议)</title>
     <link href="https://iddd.top/2018-05-28-Go-struct-method-receiver.html"/>
     <id>https://iddd.top/2018-05-28-Go-struct-method-receiver.html</id>
@@ -105,6 +80,31 @@
       
       
         &lt;h1 id=&quot;关于Go语言-结构体-Struct-方法-Method-接收者-Receiver-类型的适用场景选择和命名约定-Go官方建议&quot;&gt;&lt;a href=&quot;#关于Go语言-结构体-Struct-方法-Method-接收者-Receiver-类型的适用场景选择和命名约定-Go
+      
+    
+    </summary>
+    
+      <category term="编程语言" scheme="https://iddd.top/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/"/>
+    
+    
+      <category term="Golang" scheme="https://iddd.top/tags/Golang/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Golang的Struct结构体</title>
+    <link href="https://iddd.top/2018-05-28-Go-struct.html"/>
+    <id>https://iddd.top/2018-05-28-Go-struct.html</id>
+    <published>2018-05-27T18:30:01.000Z</published>
+    <updated>2018-05-27T18:43:14.990Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="面向对象Class类的底层实现从某些方面说就是结构体，对象的引用就是指针，只是语言把他们封装起来了而已。"><a href="#面向对象Class类的底层实现从某些方面说就是结构体，对象的引用就是指针，只是语言把他们封装起来了而已。" class="headerlink" title="面向对象Class类的底层实现从某些方面说就是结构体，对象的引用就是指针，只是语言把他们封装起来了而已。"></a>面向对象Class类的底层实现从某些方面说就是结构体，对象的引用就是指针，只是语言把他们封装起来了而已。</h1><p>Golang的Struct结构体（源于C语言，但又有别于C）的灵活性：<br>go语言中并没有像C++，Java语言中这类的Class，它只含有像C语言中的结构体，用结构体和指针等特性，完成一个类的作用，很巧妙的使用了指针和结构体，不仅是go的面向对象，包括go语言中的map等操作都是借助了结构体。其实，说白了，C++、Java等面向对象的语言中，类的底层实现就是结构体，对象的引用就是指针，只是语言把他们封装起来了而已。很多人刚接触面向对象很不理解这些东西也应该缘于此。<br>或者说，面向对象的封装在某种意义上是以牺牲灵活特性的为代价的一种抽象简化。</p><p>所有高级语言(PHP、Java、Python、JavaScript等等…)的数组Array、字典map、Slice切片、Json等结构类型往往只是叫法不一样，多少都源于C系或者受到C系的Struct结构体思想的影响,在某些特定领域内，做了一些针对性的解决方案。</p><p>PHP就是c语言实现的一套高级“程序”语言，只不过是这套“程序化的语言”的规范和语法等机制可以用来快速做web领域的事情，通过解释器，转成底层语言完成代码的最终执行。</p><p>这也印证了很多答案往往追根溯源都在计算机数据结构基础里没有捷径可以走。</p><h3 id="编程的世界应该是丰富多彩的-不拘泥于任何一种思维模式。"><a href="#编程的世界应该是丰富多彩的-不拘泥于任何一种思维模式。" class="headerlink" title="编程的世界应该是丰富多彩的,不拘泥于任何一种思维模式。"></a>编程的世界应该是丰富多彩的,不拘泥于任何一种思维模式。</h3><h2 id="golang-struct注意事项："><a href="#golang-struct注意事项：" class="headerlink" title="golang struct注意事项："></a>golang struct注意事项：</h2><p>对于struct类型来说，字段的先后顺序是非常关键的。如果两个struct类型包含了完全相同的字段，但是排列顺序不同或者进行了部分合并，那么这两个struct就是不同的类型！</p><p>如果struct字段是大写字母开头，那么该字段就是导出的（包外可见），这也符合Go语言的可见性规则。因此一个struct可以同时包含导出和未导出的变量。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;面向对象Class类的底层实现从某些方面说就是结构体，对象的引用就是指针，只是语言把他们封装起来了而已。&quot;&gt;&lt;a href=&quot;#面向对象Class类的底层实现从某些方面说就是结构体，对象的引用就是指针，只是语言把他们封装起来了而已。&quot; class=&quot;headerl
       
     
     </summary>
