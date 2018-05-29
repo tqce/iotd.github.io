@@ -2,16 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://iddd.top/404.html</loc>
+    <loc>https://iddd.top/2018-05-28-Go-struct.html</loc>
     
-    <lastmod>2018-05-28T06:56:49.833Z</lastmod>
+    <lastmod>2018-05-29T13:23:16.724Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://iddd.top/2018-05-27-about-author.html</loc>
     
-    <lastmod>2018-05-28T06:52:05.525Z</lastmod>
+    <lastmod>2018-05-29T13:22:39.731Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://iddd.top/404.html</loc>
+    
+    <lastmod>2018-05-28T06:56:49.833Z</lastmod>
     
   </url>
   
@@ -26,13 +33,6 @@
     <loc>https://iddd.top/2018-05-28-Go-null-judge.html</loc>
     
     <lastmod>2018-05-28T06:51:56.325Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://iddd.top/2018-05-28-Go-struct.html</loc>
-    
-    <lastmod>2018-05-27T18:43:14.990Z</lastmod>
     
   </url>
   
