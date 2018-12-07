@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://iddd.top/"/>
-  <updated>2018-05-31T06:46:39.026Z</updated>
+  <updated>2018-05-31T06:46:39.027Z</updated>
   <id>https://iddd.top/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Golang 初始化空值</title>
+    <link href="https://iddd.top/2018-05-28-Go-null-judge.html"/>
+    <id>https://iddd.top/2018-05-28-Go-null-judge.html</id>
+    <published>2018-05-27T18:30:01.000Z</published>
+    <updated>2018-05-31T06:46:39.027Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="int空值是0，"><a href="#int空值是0，" class="headerlink" title="int空值是0，"></a>int空值是0，</h3><h3 id="string空值是””而不是null或者nil（区别于其他语言），"><a href="#string空值是””而不是null或者nil（区别于其他语言），" class="headerlink" title="string空值是””而不是null或者nil（区别于其他语言），"></a>string空值是””而不是null或者nil（区别于其他语言），</h3><h3 id="Slice空值是长度为0的Slice而不是nil，"><a href="#Slice空值是长度为0的Slice而不是nil，" class="headerlink" title="Slice空值是长度为0的Slice而不是nil，"></a>Slice空值是长度为0的Slice而不是nil，</h3><h3 id="map空值是nil，"><a href="#map空值是nil，" class="headerlink" title="map空值是nil，"></a>map空值是nil，</h3><h3 id="error空值是nil，"><a href="#error空值是nil，" class="headerlink" title="error空值是nil，"></a>error空值是nil，</h3><h3 id="struct空值是一个“所有成员都是空值”的空Struct而不是nil，"><a href="#struct空值是一个“所有成员都是空值”的空Struct而不是nil，" class="headerlink" title="struct空值是一个“所有成员都是空值”的空Struct而不是nil，"></a>struct空值是一个“所有成员都是空值”的空Struct而不是nil，</h3><h3 id="不能单纯地判断一个struct是不是nil，因为它永远不可能是nil，可以通过返回一个error来判断是否为空，"><a href="#不能单纯地判断一个struct是不是nil，因为它永远不可能是nil，可以通过返回一个error来判断是否为空，" class="headerlink" title="不能单纯地判断一个struct是不是nil，因为它永远不可能是nil，可以通过返回一个error来判断是否为空，"></a>不能单纯地判断一个struct是不是nil，因为它永远不可能是nil，可以通过返回一个error来判断是否为空，</h3><h3 id="golang标准库里的常见做法：if-err-nil"><a href="#golang标准库里的常见做法：if-err-nil" class="headerlink" title="golang标准库里的常见做法：if err != nil"></a>golang标准库里的常见做法：if err != nil</h3>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;int空值是0，&quot;&gt;&lt;a href=&quot;#int空值是0，&quot; class=&quot;headerlink&quot; title=&quot;int空值是0，&quot;&gt;&lt;/a&gt;int空值是0，&lt;/h3&gt;&lt;h3 id=&quot;string空值是””而不是null或者nil（区别于其他语言），&quot;&gt;&lt;a hre
+      
+    
+    </summary>
+    
+      <category term="编程语言" scheme="https://iddd.top/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/"/>
+    
+    
+      <category term="Golang" scheme="https://iddd.top/tags/Golang/"/>
+    
+  </entry>
   
   <entry>
     <title>Golang不使用OS层process而使用语言层面（Goroutine）处理 并发 &amp; 并行 Task任务方案(针对业务来说)的个人思考和实践思路随想</title>
@@ -40,33 +65,6 @@
       <category term="Golang" scheme="https://iddd.top/tags/Golang/"/>
     
       <category term="Goroutine" scheme="https://iddd.top/tags/Goroutine/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Golang Slice 总结</title>
-    <link href="https://iddd.top/2018-05-28-Go-silce.html"/>
-    <id>https://iddd.top/2018-05-28-Go-silce.html</id>
-    <published>2018-05-27T18:30:01.000Z</published>
-    <updated>2018-05-31T06:46:39.029Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="go-切片：本质"><a href="#go-切片：本质" class="headerlink" title="go 切片：本质"></a>go 切片：本质</h1><h1 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h1><p>Go的切片是在数组之上的抽象数据类型，因此在了解切片之前必须要要理解数组。<br>数组类型由指定和长度和元素类型定义。<br>数组不需要显式的初始化；数组元素会自动初始化为零值：<br>Go的数组是值语义。一个数组变量表示整个数组，它不是指向第一个元素的指针（比如C语言的数组）。当一个数组变量被赋值或者被传递的时候，实际上会复制整个数组。（为了避免复制数组，你可以传递一个指向数组的指针，但是数组指针并不是数组。）可以将数组看作一个特殊的struct，结构的字段名对应数组的索引，同时成员的数目固定。</p><h2 id="切片"><a href="#切片" class="headerlink" title="切片"></a>切片</h2><p>数组虽然有适用它们的地方，但是数组不够灵活，因此在Go代码中数组使用的并不多。但是，切片则使用得相当广泛。切片基于数组构建，但是提供更强的功能和便利。<br>切片的类型是 []T，T 是切片元素的类型。和数组不同的是，切片没有固定的长度。<br>切片的字面值和数组字面值很像，不过切片没有指定元素个数：<br>切片可以内置函数 make 创建，函数签名为：<br>func make([]T, len, cap) []T<br>T 代表被创建的切片元素的类型。函数 make 接受一个类型、一个长度和一个可选的容量参数。调用 make 时，内部会分配一个数组，然后返回数组对应的切片。<br>当容量参数被忽略时，它默认为指定的长度。下面是简洁的写法：<br>s := make([]byte, 5)<br>可以使用内置函数 len 和 cap 获取切片的长度和容量信息。<br>len(s) == 5<br>cap(s) == 5</p><h3 id="长度和容量之间的关系。"><a href="#长度和容量之间的关系。" class="headerlink" title="长度和容量之间的关系。"></a>长度和容量之间的关系。</h3><p>零值的切片类型变量为 nil。对于零值切片变量，len 和 cap 都将返回 0。<br>切片也可以基于现有的切片或数组生成。切分的范围由两个由冒号分割的索引对应的半开区间指定。<br>切片的开始和结束的索引都是可选的；它们分别默认为零和数组的长度。</p><h3 id="切片的本质"><a href="#切片的本质" class="headerlink" title="切片的本质"></a>切片的本质</h3><p>一个切片是一个数组切割区间的描述。它包含了指向数组的指针，切割区间的长度，和容量（切割区间的最大长度）。<br>切片并不复制整个切片元素。它创建一个新的切片执行同样的底层数组。这使得切片操作和数组索引一样高效。因此，通过一个新切片修改元素同样会影响到原始的切片。<br>切片增长不能超出其容量。增长超出切片容量将会导致运行时异常，就像切片或数组的索引超出范围引起异常一样。同样，不能使用小于零的索引去访问切片之前的元素。<br>切片生长（复制和追加）<br>要增加切片的容量必须创建一个新的、更大容量的切片，然后将原有切片的内容复制到新的切片。整个技术是一些支持动态数组语言的常见实现。<br>循环中复制的操作可以由 copy 内置函数替代。copy 函数将源切片的元素复制到目的切片。它返回复制元素的数目。<br>func copy(dst, src []T) int<br>copy 函数支持不同长度的切片之间的复制（它只复制最小切片长度的元素）。此外，copy 函数可以正确处理源和目的切片有重叠的情况。<br>但大多数程序不需要完全的控制，因此Go提供了一个内置函数 append，用于大多数场合；它的函数签名：<br>func append(s []T, x …T) []T<br>append函数将x追加到切片s的末尾，并且在必要的时候增加容量。<br>如果是要将一个切片追加到另一个切片尾部，需要使用…语法将第2个参数展开为参数列表。<br>可以声明一个零值切片（nil），然后在循环中向切片追加数据：</p><p>可能的“陷阱”<br>切片操作并不会复制底层的数组。此层的数组将被保存在内存中，直到它不再被引用。有时候可能会因为一个小的内存引用导致保存所有的数据。</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h1 id=&quot;go-切片：本质&quot;&gt;&lt;a href=&quot;#go-切片：本质&quot; class=&quot;headerlink&quot; title=&quot;go 切片：本质&quot;&gt;&lt;/a&gt;go 切片：本质&lt;/h1&gt;&lt;h1 id=&quot;数组&quot;&gt;&lt;a href=&quot;#数组&quot; class=&quot;headerlink&quot; titl
-      
-    
-    </summary>
-    
-      <category term="编程语言" scheme="https://iddd.top/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/"/>
-    
-    
-      <category term="Golang" scheme="https://iddd.top/tags/Golang/"/>
-    
-      <category term="Slice" scheme="https://iddd.top/tags/Slice/"/>
     
   </entry>
   
@@ -98,19 +96,19 @@
   </entry>
   
   <entry>
-    <title>Golang 初始化空值</title>
-    <link href="https://iddd.top/2018-05-28-Go-null-judge.html"/>
-    <id>https://iddd.top/2018-05-28-Go-null-judge.html</id>
+    <title>Golang Slice 总结</title>
+    <link href="https://iddd.top/2018-05-28-Go-silce.html"/>
+    <id>https://iddd.top/2018-05-28-Go-silce.html</id>
     <published>2018-05-27T18:30:01.000Z</published>
-    <updated>2018-05-31T06:46:39.027Z</updated>
+    <updated>2018-05-31T06:46:39.029Z</updated>
     
-    <content type="html"><![CDATA[<h3 id="int空值是0，"><a href="#int空值是0，" class="headerlink" title="int空值是0，"></a>int空值是0，</h3><h3 id="string空值是””而不是null或者nil（区别于其他语言），"><a href="#string空值是””而不是null或者nil（区别于其他语言），" class="headerlink" title="string空值是””而不是null或者nil（区别于其他语言），"></a>string空值是””而不是null或者nil（区别于其他语言），</h3><h3 id="Slice空值是长度为0的Slice而不是nil，"><a href="#Slice空值是长度为0的Slice而不是nil，" class="headerlink" title="Slice空值是长度为0的Slice而不是nil，"></a>Slice空值是长度为0的Slice而不是nil，</h3><h3 id="map空值是nil，"><a href="#map空值是nil，" class="headerlink" title="map空值是nil，"></a>map空值是nil，</h3><h3 id="error空值是nil，"><a href="#error空值是nil，" class="headerlink" title="error空值是nil，"></a>error空值是nil，</h3><h3 id="struct空值是一个“所有成员都是空值”的空Struct而不是nil，"><a href="#struct空值是一个“所有成员都是空值”的空Struct而不是nil，" class="headerlink" title="struct空值是一个“所有成员都是空值”的空Struct而不是nil，"></a>struct空值是一个“所有成员都是空值”的空Struct而不是nil，</h3><h3 id="不能单纯地判断一个struct是不是nil，因为它永远不可能是nil，可以通过返回一个error来判断是否为空，"><a href="#不能单纯地判断一个struct是不是nil，因为它永远不可能是nil，可以通过返回一个error来判断是否为空，" class="headerlink" title="不能单纯地判断一个struct是不是nil，因为它永远不可能是nil，可以通过返回一个error来判断是否为空，"></a>不能单纯地判断一个struct是不是nil，因为它永远不可能是nil，可以通过返回一个error来判断是否为空，</h3><h3 id="golang标准库里的常见做法：if-err-nil"><a href="#golang标准库里的常见做法：if-err-nil" class="headerlink" title="golang标准库里的常见做法：if err != nil"></a>golang标准库里的常见做法：if err != nil</h3>]]></content>
+    <content type="html"><![CDATA[<h1 id="go-切片：本质"><a href="#go-切片：本质" class="headerlink" title="go 切片：本质"></a>go 切片：本质</h1><h1 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h1><p>Go的切片是在数组之上的抽象数据类型，因此在了解切片之前必须要要理解数组。<br>数组类型由指定和长度和元素类型定义。<br>数组不需要显式的初始化；数组元素会自动初始化为零值：<br>Go的数组是值语义。一个数组变量表示整个数组，它不是指向第一个元素的指针（比如C语言的数组）。当一个数组变量被赋值或者被传递的时候，实际上会复制整个数组。（为了避免复制数组，你可以传递一个指向数组的指针，但是数组指针并不是数组。）可以将数组看作一个特殊的struct，结构的字段名对应数组的索引，同时成员的数目固定。</p><h2 id="切片"><a href="#切片" class="headerlink" title="切片"></a>切片</h2><p>数组虽然有适用它们的地方，但是数组不够灵活，因此在Go代码中数组使用的并不多。但是，切片则使用得相当广泛。切片基于数组构建，但是提供更强的功能和便利。<br>切片的类型是 []T，T 是切片元素的类型。和数组不同的是，切片没有固定的长度。<br>切片的字面值和数组字面值很像，不过切片没有指定元素个数：<br>切片可以内置函数 make 创建，函数签名为：<br>func make([]T, len, cap) []T<br>T 代表被创建的切片元素的类型。函数 make 接受一个类型、一个长度和一个可选的容量参数。调用 make 时，内部会分配一个数组，然后返回数组对应的切片。<br>当容量参数被忽略时，它默认为指定的长度。下面是简洁的写法：<br>s := make([]byte, 5)<br>可以使用内置函数 len 和 cap 获取切片的长度和容量信息。<br>len(s) == 5<br>cap(s) == 5</p><h3 id="长度和容量之间的关系。"><a href="#长度和容量之间的关系。" class="headerlink" title="长度和容量之间的关系。"></a>长度和容量之间的关系。</h3><p>零值的切片类型变量为 nil。对于零值切片变量，len 和 cap 都将返回 0。<br>切片也可以基于现有的切片或数组生成。切分的范围由两个由冒号分割的索引对应的半开区间指定。<br>切片的开始和结束的索引都是可选的；它们分别默认为零和数组的长度。</p><h3 id="切片的本质"><a href="#切片的本质" class="headerlink" title="切片的本质"></a>切片的本质</h3><p>一个切片是一个数组切割区间的描述。它包含了指向数组的指针，切割区间的长度，和容量（切割区间的最大长度）。<br>切片并不复制整个切片元素。它创建一个新的切片执行同样的底层数组。这使得切片操作和数组索引一样高效。因此，通过一个新切片修改元素同样会影响到原始的切片。<br>切片增长不能超出其容量。增长超出切片容量将会导致运行时异常，就像切片或数组的索引超出范围引起异常一样。同样，不能使用小于零的索引去访问切片之前的元素。<br>切片生长（复制和追加）<br>要增加切片的容量必须创建一个新的、更大容量的切片，然后将原有切片的内容复制到新的切片。整个技术是一些支持动态数组语言的常见实现。<br>循环中复制的操作可以由 copy 内置函数替代。copy 函数将源切片的元素复制到目的切片。它返回复制元素的数目。<br>func copy(dst, src []T) int<br>copy 函数支持不同长度的切片之间的复制（它只复制最小切片长度的元素）。此外，copy 函数可以正确处理源和目的切片有重叠的情况。<br>但大多数程序不需要完全的控制，因此Go提供了一个内置函数 append，用于大多数场合；它的函数签名：<br>func append(s []T, x …T) []T<br>append函数将x追加到切片s的末尾，并且在必要的时候增加容量。<br>如果是要将一个切片追加到另一个切片尾部，需要使用…语法将第2个参数展开为参数列表。<br>可以声明一个零值切片（nil），然后在循环中向切片追加数据：</p><p>可能的“陷阱”<br>切片操作并不会复制底层的数组。此层的数组将被保存在内存中，直到它不再被引用。有时候可能会因为一个小的内存引用导致保存所有的数据。</p>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;h3 id=&quot;int空值是0，&quot;&gt;&lt;a href=&quot;#int空值是0，&quot; class=&quot;headerlink&quot; title=&quot;int空值是0，&quot;&gt;&lt;/a&gt;int空值是0，&lt;/h3&gt;&lt;h3 id=&quot;string空值是””而不是null或者nil（区别于其他语言），&quot;&gt;&lt;a hre
+        &lt;h1 id=&quot;go-切片：本质&quot;&gt;&lt;a href=&quot;#go-切片：本质&quot; class=&quot;headerlink&quot; title=&quot;go 切片：本质&quot;&gt;&lt;/a&gt;go 切片：本质&lt;/h1&gt;&lt;h1 id=&quot;数组&quot;&gt;&lt;a href=&quot;#数组&quot; class=&quot;headerlink&quot; titl
       
     
     </summary>
@@ -119,6 +117,8 @@
     
     
       <category term="Golang" scheme="https://iddd.top/tags/Golang/"/>
+    
+      <category term="Slice" scheme="https://iddd.top/tags/Slice/"/>
     
   </entry>
   
